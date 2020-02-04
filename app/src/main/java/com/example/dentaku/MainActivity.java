@@ -28,8 +28,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     // 演算フラグ
     int flg = FLG_DEFAULT;
-    // ドットが打たれているかのフラグ
-    boolean dotFlg = false;
 
     // 演算フラグの値
     private static final int FLG_DEFAULT = 0;
@@ -116,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.button_dot:
                 sb.append(".");
-                dotFlg = true;
+                buttonDot.setEnabled(false);
                 break;
             case R.id.button_plus:
                 x = Float.valueOf(sb.toString());
@@ -158,8 +156,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             buttonMinus.setEnabled(false);
             buttonDivided.setEnabled(false);
             buttonTimes.setEnabled(false);
-            // ドットボタン無効化
-            buttonDot.setEnabled(false);
+            buttonDot.setEnabled(true);
             // 押されたボタンが演算ボタンでなければ
             if(R.id.button_plus != view.getId() &&
                     R.id.button_minus != view.getId() &&
@@ -167,17 +164,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     R.id.button_divided != view.getId() ){
                 buttonEquals.setEnabled(true);
             }
-        }
-
-
-        if(dotFlg){
-            buttonDot.setEnabled(false);
-        }else if (R.id.button_plus != view.getId() &&
-                R.id.button_minus != view.getId() &&
-                R.id.button_times != view.getId() &&
-                R.id.button_divided != view.getId() ){
-            // ドットフラグが立っていないかつ、押されたボタンが演算ボタンでなければ
-            buttonDot.setEnabled(true);
         }
 
     }
@@ -239,22 +225,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         x = 0;
         y = 0;
         flg = FLG_DEFAULT;
-        dotFlg = false;
         sb = new StringBuilder();
         buttonEquals.setEnabled(false);
         buttonPlus.setEnabled(false);
         buttonMinus.setEnabled(false);
         buttonTimes.setEnabled(false);
         buttonDivided.setEnabled(false);
-        buttonDot.setEnabled(false);
-
-    }
-
-    /**
-     * ボタンの有効無効制御
-     */
-    private void setEnabled(){
-
+        buttonDot.setEnabled(true);
 
     }
 
