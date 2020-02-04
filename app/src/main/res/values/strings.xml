@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">電卓アプリ</string>
+    <string name="button_0">０</string>
+    <string name="button_1">１</string>
+    <string name="button_2">２</string>
+    <string name="button_3">３</string>
+    <string name="button_4">４</string>
+    <string name="button_5">５</string>
+    <string name="button_6">６</string>
+    <string name="button_7">７</string>
+    <string name="button_8">８</string>
+    <string name="button_9">９</string>
+    <string name="button_equals">＝</string>
+    <string name="button_plus">＋</string>
+    <string name="button_dot">．</string>
+    <string name="button_minus">ー</string>
+    <string name="button_times">×</string>
+    <string name="button_divided">÷</string>
+    <string name="button_CLR">CLR</string>
+</resources>
