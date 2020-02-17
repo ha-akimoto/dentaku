@@ -170,6 +170,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     /**
      * イコールボタン押下
+     * 
      * @param view ビュー
      */
     public void equals(View view){
