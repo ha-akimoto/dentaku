@@ -1,0 +1,320 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+    <title>Coverage Report :: MainActivity</title>
+    <style type="text/css">
+    @import "../../.css/coverage.css";
+
+    </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+    <div class="breadCrumbs">
+        [ <a href="../../index.html">all classes</a> ]
+        [ <a href="../index.html">com.example.dentaku</a> ]
+    </div>
+
+    <h1>Coverage Summary for Class: MainActivity (com.example.dentaku)</h1>
+
+    <table class="coverageStats">
+        <tr>
+            <th class="name">Class</th>
+            <th class="coverageStat
+">
+                Class, %
+            </th>
+            <th class="coverageStat
+">
+                Method, %
+            </th>
+            <th class="coverageStat
+">
+                Line, %
+            </th>
+        </tr>
+        <tr>
+            <td class="name">MainActivity</td>
+            <td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+                <span class="absValue">
+    (1/ 1)
+  </span>
+            </td>
+            <td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+                <span class="absValue">
+    (3/ 6)
+  </span>
+            </td>
+            <td class="coverageStat">
+  <span class="percent">
+    27.7%
+  </span>
+                <span class="absValue">
+    (33/ 119)
+  </span>
+            </td>
+        </tr>
+
+    </table>
+
+    <br/>
+    <br/>
+
+
+    <div class="sourceCode"><i>1</i>&nbsp;package com.example.dentaku;
+        <i>2</i>&nbsp;
+        <i>3</i>&nbsp;import androidx.appcompat.app.AppCompatActivity;
+        <i>4</i>&nbsp;
+        <i>5</i>&nbsp;import android.os.Bundle;
+        <i>6</i>&nbsp;import android.view.View;
+        <i>7</i>&nbsp;import android.widget.Button;
+        <i>8</i>&nbsp;import android.widget.TextView;
+        <i>9</i>&nbsp;import android.widget.Toast;
+        <i>10</i>&nbsp;
+        <b class="fc"><i>11</i>&nbsp;public class MainActivity extends AppCompatActivity implements
+            View.OnClickListener {</b>
+        <i>12</i>&nbsp;
+        <i>13</i>&nbsp; // 内部から直接操作する要素
+        <i>14</i>&nbsp; Button buttonEquals;
+        <i>15</i>&nbsp; Button buttonPlus;
+        <i>16</i>&nbsp; Button buttonMinus;
+        <i>17</i>&nbsp; Button buttonTimes;
+        <i>18</i>&nbsp; Button buttonDivided;
+        <i>19</i>&nbsp; Button buttonDot;
+        <i>20</i>&nbsp; TextView textView;
+        <i>21</i>&nbsp;
+        <i>22</i>&nbsp; // 文字列表示用のストリングビルダー
+        <i>23</i>&nbsp; StringBuilder sb;
+        <i>24</i>&nbsp;
+        <i>25</i>&nbsp; // 計算用変数
+        <b class="fc"><i>26</i>&nbsp; float x = 0;</b>
+        <b class="fc"><i>27</i>&nbsp; float y = 0;</b>
+        <i>28</i>&nbsp;
+        <i>29</i>&nbsp; // 演算フラグ
+        <b class="fc"><i>30</i>&nbsp; int flg = FLG_DEFAULT;</b>
+        <i>31</i>&nbsp;
+        <i>32</i>&nbsp; // 演算フラグの値
+        <i>33</i>&nbsp; private static final int FLG_DEFAULT = 0;
+        <i>34</i>&nbsp; private static final int FLG_PLUS = 1;
+        <i>35</i>&nbsp; private static final int FLG_MINUS = 2;
+        <i>36</i>&nbsp; private static final int FLG_TIMES = 3;
+        <i>37</i>&nbsp; private static final int FLG_DIVIDED = 4;
+        <i>38</i>&nbsp;
+        <i>39</i>&nbsp; @Override
+        <i>40</i>&nbsp; protected void onCreate(Bundle savedInstanceState) {
+        <b class="nc"><i>41</i>&nbsp; super.onCreate(savedInstanceState);</b>
+        <b class="nc"><i>42</i>&nbsp; setContentView(R.layout.activity_main);</b>
+        <i>43</i>&nbsp;
+        <i>44</i>&nbsp; // テキストビューの取得
+        <b class="nc"><i>45</i>&nbsp; textView = findViewById(R.id.textView);</b>
+        <i>46</i>&nbsp;
+        <i>47</i>&nbsp; // ボタンの取得
+        <b class="nc"><i>48</i>&nbsp; buttonEquals = findViewById(R.id.button_equals);</b>
+        <b class="nc"><i>49</i>&nbsp; buttonPlus = findViewById(R.id.button_plus);</b>
+        <b class="nc"><i>50</i>&nbsp; buttonMinus = findViewById(R.id.button_minus);</b>
+        <b class="nc"><i>51</i>&nbsp; buttonTimes = findViewById(R.id.button_times);</b>
+        <b class="nc"><i>52</i>&nbsp; buttonDivided = findViewById(R.id.button_divided);</b>
+        <b class="nc"><i>53</i>&nbsp; buttonDot = findViewById(R.id.button_dot);</b>
+        <i>54</i>&nbsp;
+        <i>55</i>&nbsp; // 初期化
+        <b class="nc"><i>56</i>&nbsp; begin();</b>
+        <b class="nc"><i>57</i>&nbsp; textView.setText(sb);</b>
+        <i>58</i>&nbsp;
+        <i>59</i>&nbsp; // ボタン押下イベントリスナーの登録
+        <b class="nc"><i>60</i>&nbsp; findViewById(R.id.button1).setOnClickListener(this);</b>
+        <b class="nc"><i>61</i>&nbsp; findViewById(R.id.button2).setOnClickListener(this);</b>
+        <b class="nc"><i>62</i>&nbsp; findViewById(R.id.button3).setOnClickListener(this);</b>
+        <b class="nc"><i>63</i>&nbsp; findViewById(R.id.button4).setOnClickListener(this);</b>
+        <b class="nc"><i>64</i>&nbsp; findViewById(R.id.button5).setOnClickListener(this);</b>
+        <b class="nc"><i>65</i>&nbsp; findViewById(R.id.button6).setOnClickListener(this);</b>
+        <b class="nc"><i>66</i>&nbsp; findViewById(R.id.button7).setOnClickListener(this);</b>
+        <b class="nc"><i>67</i>&nbsp; findViewById(R.id.button8).setOnClickListener(this);</b>
+        <b class="nc"><i>68</i>&nbsp; findViewById(R.id.button9).setOnClickListener(this);</b>
+        <b class="nc"><i>69</i>&nbsp; findViewById(R.id.button0).setOnClickListener(this);</b>
+        <b class="nc"><i>70</i>&nbsp; findViewById(R.id.button_dot).setOnClickListener(this);</b>
+        <b class="nc"><i>71</i>&nbsp; buttonPlus.setOnClickListener(this);</b>
+        <b class="nc"><i>72</i>&nbsp; buttonMinus.setOnClickListener(this);</b>
+        <b class="nc"><i>73</i>&nbsp; buttonTimes.setOnClickListener(this);</b>
+        <b class="nc"><i>74</i>&nbsp; buttonDivided.setOnClickListener(this);</b>
+        <i>75</i>&nbsp;
+        <b class="nc"><i>76</i>&nbsp; }</b>
+        <i>77</i>&nbsp;
+        <i>78</i>&nbsp; /**
+        <i>79</i>&nbsp; * リスナーに設定されるクリックイベント
+        <i>80</i>&nbsp; * @param view ビュー
+        <i>81</i>&nbsp; */
+        <i>82</i>&nbsp; public void onClick(View view){
+        <i>83</i>&nbsp; // 文字列とフラグの設定
+        <b class="nc"><i>84</i>&nbsp; switch(view.getId()){</b>
+        <i>85</i>&nbsp; case R.id.button1:
+        <b class="nc"><i>86</i>&nbsp; sb.append(&quot;1&quot;);</b>
+        <b class="nc"><i>87</i>&nbsp; break;</b>
+        <i>88</i>&nbsp; case R.id.button2:
+        <b class="nc"><i>89</i>&nbsp; sb.append(&quot;2&quot;);</b>
+        <b class="nc"><i>90</i>&nbsp; break;</b>
+        <i>91</i>&nbsp; case R.id.button3:
+        <b class="nc"><i>92</i>&nbsp; sb.append(&quot;3&quot;);</b>
+        <b class="nc"><i>93</i>&nbsp; break;</b>
+        <i>94</i>&nbsp; case R.id.button4:
+        <b class="nc"><i>95</i>&nbsp; sb.append(&quot;4&quot;);</b>
+        <b class="nc"><i>96</i>&nbsp; break;</b>
+        <i>97</i>&nbsp; case R.id.button5:
+        <b class="nc"><i>98</i>&nbsp; sb.append(&quot;5&quot;);</b>
+        <b class="nc"><i>99</i>&nbsp; break;</b>
+        <i>100</i>&nbsp; case R.id.button6:
+        <b class="nc"><i>101</i>&nbsp; sb.append(&quot;6&quot;);</b>
+        <b class="nc"><i>102</i>&nbsp; break;</b>
+        <i>103</i>&nbsp; case R.id.button7:
+        <b class="nc"><i>104</i>&nbsp; sb.append(&quot;7&quot;);</b>
+        <b class="nc"><i>105</i>&nbsp; break;</b>
+        <i>106</i>&nbsp; case R.id.button8:
+        <b class="nc"><i>107</i>&nbsp; sb.append(&quot;8&quot;);</b>
+        <b class="nc"><i>108</i>&nbsp; break;</b>
+        <i>109</i>&nbsp; case R.id.button9:
+        <b class="nc"><i>110</i>&nbsp; sb.append(&quot;9&quot;);</b>
+        <b class="nc"><i>111</i>&nbsp; break;</b>
+        <i>112</i>&nbsp; case R.id.button0:
+        <b class="nc"><i>113</i>&nbsp; sb.append(&quot;0&quot;);</b>
+        <b class="nc"><i>114</i>&nbsp; break;</b>
+        <i>115</i>&nbsp; case R.id.button_dot:
+        <b class="nc"><i>116</i>&nbsp; sb.append(&quot;.&quot;);</b>
+        <b class="nc"><i>117</i>&nbsp; buttonDot.setEnabled(false);</b>
+        <b class="nc"><i>118</i>&nbsp; break;</b>
+        <i>119</i>&nbsp; case R.id.button_plus:
+        <b class="nc"><i>120</i>&nbsp; x = Float.valueOf(sb.toString());</b>
+        <b class="nc"><i>121</i>&nbsp; sb.append(&quot;+&quot;);</b>
+        <i>122</i>&nbsp; // フラグを設定
+        <b class="nc"><i>123</i>&nbsp; flg = FLG_PLUS;</b>
+        <b class="nc"><i>124</i>&nbsp; break;</b>
+        <i>125</i>&nbsp; case R.id.button_minus:
+        <b class="nc"><i>126</i>&nbsp; x = Float.valueOf(sb.toString());</b>
+        <b class="nc"><i>127</i>&nbsp; sb.append(&quot;-&quot;);</b>
+        <i>128</i>&nbsp; // フラグを設定
+        <b class="nc"><i>129</i>&nbsp; flg = FLG_MINUS;</b>
+        <b class="nc"><i>130</i>&nbsp; break;</b>
+        <i>131</i>&nbsp; case R.id.button_times:
+        <b class="nc"><i>132</i>&nbsp; x = Float.valueOf(sb.toString());</b>
+        <b class="nc"><i>133</i>&nbsp; sb.append(&quot;×&quot;);</b>
+        <i>134</i>&nbsp; // フラグを設定
+        <b class="nc"><i>135</i>&nbsp; flg = FLG_TIMES;</b>
+        <b class="nc"><i>136</i>&nbsp; break;</b>
+        <i>137</i>&nbsp; case R.id.button_divided:
+        <b class="nc"><i>138</i>&nbsp; x = Float.valueOf(sb.toString());</b>
+        <b class="nc"><i>139</i>&nbsp; sb.append(&quot;÷&quot;);</b>
+        <i>140</i>&nbsp; // フラグを設定
+        <b class="nc"><i>141</i>&nbsp; flg = FLG_DIVIDED;</b>
+        <i>142</i>&nbsp; break;
+        <i>143</i>&nbsp; }
+        <b class="nc"><i>144</i>&nbsp; textView.setText(sb);</b>
+        <i>145</i>&nbsp;
+        <i>146</i>&nbsp; // ボタンの有効無効制御
+        <b class="nc"><i>147</i>&nbsp; if(FLG_DEFAULT == flg){</b>
+        <i>148</i>&nbsp; // フラグが立っていなければ演算ボタン有効化
+        <b class="nc"><i>149</i>&nbsp; buttonPlus.setEnabled(true);</b>
+        <b class="nc"><i>150</i>&nbsp; buttonMinus.setEnabled(true);</b>
+        <b class="nc"><i>151</i>&nbsp; buttonDivided.setEnabled(true);</b>
+        <b class="nc"><i>152</i>&nbsp; buttonTimes.setEnabled(true);</b>
+        <i>153</i>&nbsp; }else{
+        <i>154</i>&nbsp; // 演算ボタン無効化
+        <b class="nc"><i>155</i>&nbsp; buttonPlus.setEnabled(false);</b>
+        <b class="nc"><i>156</i>&nbsp; buttonMinus.setEnabled(false);</b>
+        <b class="nc"><i>157</i>&nbsp; buttonDivided.setEnabled(false);</b>
+        <b class="nc"><i>158</i>&nbsp; buttonTimes.setEnabled(false);</b>
+        <b class="nc"><i>159</i>&nbsp; buttonDot.setEnabled(true);</b>
+        <i>160</i>&nbsp; // 押されたボタンが演算ボタンでなければ
+        <b class="nc"><i>161</i>&nbsp; if(R.id.button_plus != view.getId() &amp;&amp;</b>
+        <b class="nc"><i>162</i>&nbsp; R.id.button_minus != view.getId() &amp;&amp;</b>
+        <b class="nc"><i>163</i>&nbsp; R.id.button_times != view.getId() &amp;&amp;</b>
+        <b class="nc"><i>164</i>&nbsp; R.id.button_divided != view.getId() ){</b>
+        <b class="nc"><i>165</i>&nbsp; buttonEquals.setEnabled(true);</b>
+        <i>166</i>&nbsp; }
+        <i>167</i>&nbsp; }
+        <i>168</i>&nbsp;
+        <b class="nc"><i>169</i>&nbsp; }</b>
+        <i>170</i>&nbsp;
+        <i>171</i>&nbsp; /**
+        <i>172</i>&nbsp; * イコールボタン押下
+        <i>173</i>&nbsp; * @param view ビュー
+        <i>174</i>&nbsp; */
+        <i>175</i>&nbsp; public void equals(View view){
+        <b class="fc"><i>176</i>&nbsp; String equalsText = &quot;&quot;;</b>
+        <i>177</i>&nbsp;
+        <b class="fc"><i>178</i>&nbsp; switch (flg){</b>
+        <i>179</i>&nbsp; case FLG_PLUS:
+        <b class="fc"><i>180</i>&nbsp; y = Float.valueOf(sb.substring(sb.indexOf(&quot;+&quot;)+1));</b>
+        <b class="fc"><i>181</i>&nbsp; equalsText= String.valueOf(x+y);</b>
+        <b class="fc"><i>182</i>&nbsp; break;</b>
+        <i>183</i>&nbsp;
+        <i>184</i>&nbsp; case FLG_MINUS:
+        <b class="fc"><i>185</i>&nbsp; y = Float.valueOf(sb.substring(sb.indexOf(&quot;-&quot;)+1));</b>
+        <b class="fc"><i>186</i>&nbsp; equalsText= String.valueOf(x-y);</b>
+        <b class="fc"><i>187</i>&nbsp; break;</b>
+        <i>188</i>&nbsp;
+        <i>189</i>&nbsp; case FLG_TIMES:
+        <b class="fc"><i>190</i>&nbsp; y = Float.valueOf(sb.substring(sb.indexOf(&quot;×&quot;)+1));</b>
+        <b class="fc"><i>191</i>&nbsp; equalsText= String.valueOf(x*y);</b>
+        <b class="fc"><i>192</i>&nbsp; break;</b>
+        <i>193</i>&nbsp;
+        <i>194</i>&nbsp; case FLG_DIVIDED:
+        <b class="fc"><i>195</i>&nbsp; y = Float.valueOf(sb.substring(sb.indexOf(&quot;÷&quot;)+1));</b>
+        <b class="fc"><i>196</i>&nbsp; equalsText= String.valueOf(x/y);</b>
+        <i>197</i>&nbsp; break;
+        <i>198</i>&nbsp;
+        <i>199</i>&nbsp; }
+        <i>200</i>&nbsp;
+        <i>201</i>&nbsp; // 小数点以下が０なら小数点以上の値を取得する
+        <b class="fc"><i>202</i>&nbsp; if(equalsText.matches(&quot;^.*\\.0+$&quot;)){</b>
+        <b class="fc"><i>203</i>&nbsp; equalsText = equalsText.substring(0,equalsText.indexOf(&quot;.&quot;));</b>
+        <i>204</i>&nbsp; }
+        <i>205</i>&nbsp;
+        <i>206</i>&nbsp; // 答えをテキストビューに設定
+        <b class="fc"><i>207</i>&nbsp; textView.setText(equalsText);</b>
+        <i>208</i>&nbsp; // 初期化
+        <b class="fc"><i>209</i>&nbsp; begin();</b>
+        <b class="fc"><i>210</i>&nbsp; }</b>
+        <i>211</i>&nbsp;
+        <i>212</i>&nbsp; /**
+        <i>213</i>&nbsp; * クリア
+        <i>214</i>&nbsp; * @param view ビュー
+        <i>215</i>&nbsp; */
+        <i>216</i>&nbsp; public void clear(View view){
+        <b class="nc"><i>217</i>&nbsp; begin();</b>
+        <b class="nc"><i>218</i>&nbsp; textView.setText(sb);</b>
+        <b class="nc"><i>219</i>&nbsp; }</b>
+        <i>220</i>&nbsp;
+        <i>221</i>&nbsp; /**
+        <i>222</i>&nbsp; * 初期化
+        <i>223</i>&nbsp; */
+        <i>224</i>&nbsp; private void begin(){
+        <b class="fc"><i>225</i>&nbsp; x = 0;</b>
+        <b class="fc"><i>226</i>&nbsp; y = 0;</b>
+        <b class="fc"><i>227</i>&nbsp; flg = FLG_DEFAULT;</b>
+        <b class="fc"><i>228</i>&nbsp; sb = new StringBuilder();</b>
+        <b class="fc"><i>229</i>&nbsp; buttonEquals.setEnabled(false);</b>
+        <b class="fc"><i>230</i>&nbsp; buttonPlus.setEnabled(false);</b>
+        <b class="fc"><i>231</i>&nbsp; buttonMinus.setEnabled(false);</b>
+        <b class="fc"><i>232</i>&nbsp; buttonTimes.setEnabled(false);</b>
+        <b class="fc"><i>233</i>&nbsp; buttonDivided.setEnabled(false);</b>
+        <b class="fc"><i>234</i>&nbsp; buttonDot.setEnabled(true);</b>
+        <i>235</i>&nbsp;
+        <b class="fc"><i>236</i>&nbsp; }</b>
+        <i>237</i>&nbsp;
+        <i>238</i>&nbsp;}
+    </div>
+</div>
+
+<div class="footer">
+
+    <div style="float:right;">generated on 2020-02-17 15:06</div>
+</div>
+</body>
+</html>
