@@ -27,14 +27,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     float y = 0;
 
     // 演算フラグ
-    int flg = FLG_DEFAULT;
+    int flg = Constants.FLG_DEFAULT;
 
-    // 演算フラグの値
-    private static final int FLG_DEFAULT = 0;
-    private static final int FLG_PLUS = 1;
-    private static final int FLG_MINUS = 2;
-    private static final int FLG_TIMES = 3;
-    private static final int FLG_DIVIDED = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,31 +114,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 x = Float.valueOf(sb.toString());
                 sb.append("+");
                 // フラグを設定
-                flg = FLG_PLUS;
+                flg = Constants.FLG_PLUS;
                 break;
             case R.id.button_minus:
                 x = Float.valueOf(sb.toString());
                 sb.append("-");
                 // フラグを設定
-                flg = FLG_MINUS;
+                flg = Constants.FLG_MINUS;
                 break;
             case R.id.button_times:
                 x = Float.valueOf(sb.toString());
                 sb.append("×");
                 // フラグを設定
-                flg = FLG_TIMES;
+                flg = Constants.FLG_TIMES;
                 break;
             case R.id.button_divided:
                 x = Float.valueOf(sb.toString());
                 sb.append("÷");
                 // フラグを設定
-                flg = FLG_DIVIDED;
+                flg = Constants.FLG_DIVIDED;
                 break;
         }
         textView.setText(sb);
 
         // ボタンの有効無効制御
-        if(FLG_DEFAULT == flg){
+        if (Constants.FLG_DEFAULT == flg) {
             // フラグが立っていなければ演算ボタン有効化
             buttonPlus.setEnabled(true);
             buttonMinus.setEnabled(true);
@@ -170,39 +164,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     /**
      * イコールボタン押下
-     * 
+     *
      * @param view ビュー
      */
     public void equals(View view){
         String equalsText = "";
 
-        switch (flg){
-            case FLG_PLUS:
-                y = Float.valueOf(sb.substring(sb.indexOf("+")+1));
-                equalsText= String.valueOf(x+y);
-                break;
-
-            case FLG_MINUS:
-                y = Float.valueOf(sb.substring(sb.indexOf("-")+1));
-                equalsText= String.valueOf(x-y);
-                break;
-
-            case FLG_TIMES:
-                y = Float.valueOf(sb.substring(sb.indexOf("×")+1));
-                equalsText= String.valueOf(x*y);
-                break;
-
-            case FLG_DIVIDED:
-                y = Float.valueOf(sb.substring(sb.indexOf("÷")+1));
-                equalsText= String.valueOf(x/y);
-                break;
-
-        }
-
-        // 小数点以下が０なら小数点以上の値を取得する
-        if(equalsText.matches("^.*\\.0+$")){
-            equalsText = equalsText.substring(0,equalsText.indexOf("."));
-        }
+        // 計算結果の取得
+        Calculation cal = new Calculation(this.x, this.sb, this.flg);
+        equalsText = cal.equal();
+        equalsText = cal.truncateDecimalPoint(equalsText);
 
         // 答えをテキストビューに設定
         textView.setText(equalsText);
@@ -225,7 +196,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void begin(){
         x = 0;
         y = 0;
-        flg = FLG_DEFAULT;
+        flg = Constants.FLG_DEFAULT;
         sb = new StringBuilder();
         buttonEquals.setEnabled(false);
         buttonPlus.setEnabled(false);
