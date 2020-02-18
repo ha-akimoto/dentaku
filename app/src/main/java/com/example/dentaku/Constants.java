@@ -10,9 +10,9 @@ public final class Constants {
     public static final int FLG_DIVIDED = 4;
 
     // 演算子
-    public static final String OPERATION_PLUS = "+";
-    public static final String OPERATION_MINUS = "-";
-    public static final String OPERATION_TIMES = "×";
-    public static final String OPERATION_DIVIDED = "÷";
+    public static final String OPERATOR_PLUS = "+";
+    public static final String OPERATOR_MINUS = "-";
+    public static final String OPERATOR_TIMES = "×";
+    public static final String OPERATOR_DIVIDED = "÷";
 
 }

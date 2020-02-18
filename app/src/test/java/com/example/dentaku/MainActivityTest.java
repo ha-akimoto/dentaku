@@ -20,17 +20,6 @@ public class MainActivityTest {
 
     Context context;
 
-    private static final int FLG_DEFAULT = 0;
-    private static final int FLG_PLUS = 1;
-    private static final int FLG_MINUS = 2;
-    private static final int FLG_TIMES = 3;
-    private static final int FLG_DIVIDED = 4;
-
-    private static final String OPERATOR_PLUS = "+";
-    private static final String OPERATOR_MINUS = "-";
-    private static final String OPERATOR_TIMES = "×";
-    private static final String OPERATOR_DIVIDED = "÷";
-
     @Before
     public void setup() {
         this.context = InstrumentationRegistry.getInstrumentation().getContext();
@@ -83,7 +72,7 @@ public class MainActivityTest {
     @Test
     public void flgDefault() {
         // 演算子：デフォルト
-        int operator = this.FLG_DEFAULT;
+        int operator = Constants.FLG_DEFAULT;
 
         TextView view = new TextView(this.context);
         MainActivity activity = setupActivity(operator, null, 0);
@@ -104,7 +93,7 @@ public class MainActivityTest {
     @Test
     public void plusPositive() {
         // 演算子：足し算
-        int operator = this.FLG_PLUS;
+        int operator = Constants.FLG_PLUS;
         // 入力値X
         int x = 106;
         // 入力値Y
@@ -112,7 +101,7 @@ public class MainActivityTest {
         // 入力値の文字列
         StringBuilder input = new StringBuilder();
         input.append(x);
-        input.append(this.OPERATOR_PLUS);
+        input.append(Constants.OPERATOR_PLUS);
         input.append(y);
         // 期待値
         String result = Integer.toString(x + y);
@@ -135,7 +124,7 @@ public class MainActivityTest {
     @Test
     public void plusPositiveDecimal() {
         // 演算子：足し算
-        int operator = this.FLG_PLUS;
+        int operator = Constants.FLG_PLUS;
         // 入力値X
         float x = 53.3f;
         // 入力値Y
@@ -143,7 +132,7 @@ public class MainActivityTest {
         // 入力値の文字列
         StringBuilder input = new StringBuilder();
         input.append(x);
-        input.append(this.OPERATOR_PLUS);
+        input.append(Constants.OPERATOR_PLUS);
         input.append(y);
         // 期待値
         String result = Float.toString(x + y);
@@ -166,7 +155,7 @@ public class MainActivityTest {
     @Test
     public void minusPositive() {
         // 演算子：引き算
-        int operator = this.FLG_MINUS;
+        int operator = Constants.FLG_MINUS;
         // 入力値X
         int x = 248;
         // 入力値Y
@@ -174,7 +163,7 @@ public class MainActivityTest {
         // 入力値の文字列
         StringBuilder input = new StringBuilder();
         input.append(x);
-        input.append(this.OPERATOR_MINUS);
+        input.append(Constants.OPERATOR_MINUS);
         input.append(y);
         // 期待値
         String result = Integer.toString(x - y);
@@ -197,7 +186,7 @@ public class MainActivityTest {
     @Test
     public void minusPositiveDecimal() {
         // 演算子：引き算
-        int operator = this.FLG_MINUS;
+        int operator = Constants.FLG_MINUS;
         // 入力値X
         float x = 342.144f;
         // 入力値Y
@@ -205,7 +194,7 @@ public class MainActivityTest {
         // 入力値の文字列
         StringBuilder input = new StringBuilder();
         input.append(x);
-        input.append(this.OPERATOR_MINUS);
+        input.append(Constants.OPERATOR_MINUS);
         input.append(y);
         // 期待値
         String result = Float.toString(x - y);
@@ -228,7 +217,7 @@ public class MainActivityTest {
     @Test
     public void minusNegativeDecimal() {
         // 演算子：引き算
-        int operator = this.FLG_MINUS;
+        int operator = Constants.FLG_MINUS;
         // 入力値X
         float x = 2.24f;
         // 入力値Y
@@ -236,7 +225,7 @@ public class MainActivityTest {
         // 入力値の文字列
         StringBuilder input = new StringBuilder();
         input.append(x);
-        input.append(this.OPERATOR_MINUS);
+        input.append(Constants.OPERATOR_MINUS);
         input.append(y);
         // 期待値
         String result = Float.toString(x - y);
@@ -259,7 +248,7 @@ public class MainActivityTest {
     @Test
     public void timesPositive() {
         // 演算子：掛け算
-        int operator = this.FLG_TIMES;
+        int operator = Constants.FLG_TIMES;
         // 入力値X
         int x = 620;
         // 入力値Y
@@ -267,7 +256,7 @@ public class MainActivityTest {
         // 入力値の文字列
         StringBuilder input = new StringBuilder();
         input.append(x);
-        input.append(this.OPERATOR_TIMES);
+        input.append(Constants.OPERATOR_TIMES);
         input.append(y);
         // 期待値
         String result = Integer.toString(x * y);
@@ -290,7 +279,7 @@ public class MainActivityTest {
     @Test
     public void timesPositiveDecimal() {
         // 演算子：掛け算
-        int operator = this.FLG_TIMES;
+        int operator = Constants.FLG_TIMES;
         // 入力値X
         float x = 24.1331f;
         // 入力値Y
@@ -298,7 +287,7 @@ public class MainActivityTest {
         // 入力値の文字列
         StringBuilder input = new StringBuilder();
         input.append(x);
-        input.append(this.OPERATOR_TIMES);
+        input.append(Constants.OPERATOR_TIMES);
         input.append(y);
         // 期待値
         String result = Float.toString(x * y);
@@ -321,7 +310,7 @@ public class MainActivityTest {
     @Test
     public void dividedPositive() {
         // 演算子：割り算
-        int operator = this.FLG_DIVIDED;
+        int operator = Constants.FLG_DIVIDED;
         // 入力値X
         int x = 942;
         // 入力値Y
@@ -329,7 +318,7 @@ public class MainActivityTest {
         // 入力値の文字列
         StringBuilder input = new StringBuilder();
         input.append(x);
-        input.append(this.OPERATOR_DIVIDED);
+        input.append(Constants.OPERATOR_DIVIDED);
         input.append(y);
         // 期待値
         String result = Integer.toString(x / y);
@@ -352,7 +341,7 @@ public class MainActivityTest {
     @Test
     public void dividedPositiveDecimal() {
         // 演算子：掛け算
-        int operator = this.FLG_DIVIDED;
+        int operator = Constants.FLG_DIVIDED;
         // 入力値X
         float x = 342.12f;
         // 入力値Y
@@ -360,7 +349,7 @@ public class MainActivityTest {
         // 入力値の文字列
         StringBuilder input = new StringBuilder();
         input.append(x);
-        input.append(this.OPERATOR_DIVIDED);
+        input.append(Constants.OPERATOR_DIVIDED);
         input.append(y);
         // 期待値
         String result = Float.toString(x / y);

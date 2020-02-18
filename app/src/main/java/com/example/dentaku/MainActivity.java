@@ -171,9 +171,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String equalsText = "";
 
         // 計算結果の取得
-        Calculation cal = new Calculation(this.x, this.sb, this.flg);
-        equalsText = cal.equal();
-        equalsText = cal.truncateDecimalPoint(equalsText);
+        if (Constants.FLG_PLUS == this.flg
+                || Constants.FLG_MINUS == this.flg
+                || Constants.FLG_TIMES == this.flg
+                || Constants.FLG_DIVIDED == this.flg) {
+            Calculation cal = new Calculation(this.x, this.sb, this.flg);
+            equalsText = cal.equal();
+            equalsText = cal.truncateDecimalPoint(equalsText);
+        }
 
         // 答えをテキストビューに設定
         textView.setText(equalsText);

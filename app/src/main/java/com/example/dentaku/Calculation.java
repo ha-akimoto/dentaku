@@ -1,7 +1,5 @@
 package com.example.dentaku;
 
-import androidx.annotation.Nullable;
-
 public class Calculation {
     private float x;
     private float y;
@@ -31,13 +29,13 @@ public class Calculation {
 
     private String getOperation() {
         if (Constants.FLG_PLUS == this.flg) {
-            return Constants.OPERATION_PLUS;
+            return Constants.OPERATOR_PLUS;
         } else if (Constants.FLG_MINUS == this.flg) {
-            return Constants.OPERATION_MINUS;
+            return Constants.OPERATOR_MINUS;
         } else if (Constants.FLG_TIMES == this.flg) {
-            return Constants.OPERATION_TIMES;
+            return Constants.OPERATOR_TIMES;
         } else if (Constants.FLG_DIVIDED == this.flg) {
-            return Constants.OPERATION_DIVIDED;
+            return Constants.OPERATOR_DIVIDED;
         } else {
             return "";
         }
