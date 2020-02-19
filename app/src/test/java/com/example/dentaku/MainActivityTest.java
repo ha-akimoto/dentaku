@@ -1,77 +1,36 @@
 package com.example.dentaku;
 
-import android.content.Context;
 import android.os.Build;
-import android.widget.Button;
-import android.widget.TextView;
 
-import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.core.app.ActivityScenario;
+import androidx.test.espresso.Espresso;
+import androidx.test.espresso.action.ViewActions;
+import androidx.test.espresso.assertion.ViewAssertions;
+import androidx.test.espresso.matcher.ViewMatchers;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
+
 @Config(sdk = Build.VERSION_CODES.O_MR1)
-@RunWith(RobolectricTestRunner.class)
+@RunWith(AndroidJUnit4.class)
 public class MainActivityTest {
-
-    Context context;
-
-    private static final int FLG_DEFAULT = 0;
-    private static final int FLG_PLUS = 1;
-    private static final int FLG_MINUS = 2;
-    private static final int FLG_TIMES = 3;
-    private static final int FLG_DIVIDED = 4;
-
-    private static final String OPERATOR_PLUS = "+";
-    private static final String OPERATOR_MINUS = "-";
-    private static final String OPERATOR_TIMES = "×";
-    private static final String OPERATOR_DIVIDED = "÷";
 
     @Before
     public void setup() {
-        this.context = InstrumentationRegistry.getInstrumentation().getContext();
+        ActivityScenario.launch(MainActivity.class);
     }
 
-    private MainActivity setupActivity(int operator, StringBuilder input, float x) {
-        MainActivity activity = new MainActivity();
-        activity.flg = operator;
-        if (null != input) {
-            activity.sb = input;
-        }
-        activity.x = x;
-
-        activity.buttonEquals = new Button(this.context);
-        activity.buttonPlus = new Button(this.context);
-        activity.buttonMinus = new Button(this.context);
-        activity.buttonTimes = new Button(this.context);
-        activity.buttonDivided = new Button(this.context);
-        activity.buttonDot = new Button(this.context);
-
-        return activity;
+    private static void clickButtonWithId(int id) {
+        Espresso.onView(ViewMatchers.withId(id)).perform(ViewActions.click());
     }
 
-    /**
-     * 演算フラグが想定外の値の場合
-     * 計算の処理を行わず正常終了すること
-     * 演算フラグ：0~4以外
-     * 期待値：Viewに設定されるテキスト=空文字
-     */
-    @Test
-    public void flgOther() {
-        // 演算子：0~4以外
-        int operator = 5;
-
-        TextView view = new TextView(this.context);
-        MainActivity activity = setupActivity(operator, null, 0);
-        activity.textView = view;
-
-        activity.equals(view);
-        Assert.assertEquals("", view.getText());
-
+    private static void checkResultWithText(String text) {
+        Espresso.onView(ViewMatchers.withId(R.id.textView))
+                .check(ViewAssertions.matches(ViewMatchers.withText(text)));
     }
 
     /**
@@ -83,15 +42,9 @@ public class MainActivityTest {
     @Test
     public void flgDefault() {
         // 演算子：デフォルト
-        int operator = this.FLG_DEFAULT;
+        clickButtonWithId(R.id.button_equals);
 
-        TextView view = new TextView(this.context);
-        MainActivity activity = setupActivity(operator, null, 0);
-        activity.textView = view;
-
-        activity.equals(view);
-        Assert.assertEquals("", view.getText());
-
+        checkResultWithText("");
     }
 
     /**
@@ -103,26 +56,25 @@ public class MainActivityTest {
      */
     @Test
     public void plusPositive() {
-        // 演算子：足し算
-        int operator = this.FLG_PLUS;
         // 入力値X
         int x = 106;
+        clickButtonWithId(R.id.button1);
+        clickButtonWithId(R.id.button0);
+        clickButtonWithId(R.id.button6);
+
+        // 演算子：足し算
+        clickButtonWithId(R.id.button_plus);
+
         // 入力値Y
         int y = 39;
-        // 入力値の文字列
-        StringBuilder input = new StringBuilder();
-        input.append(x);
-        input.append(this.OPERATOR_PLUS);
-        input.append(y);
-        // 期待値
+        clickButtonWithId(R.id.button3);
+        clickButtonWithId(R.id.button9);
+
+        // x + y = ?
         String result = Integer.toString(x + y);
+        clickButtonWithId(R.id.button_equals);
 
-        TextView view = new TextView(this.context);
-        MainActivity activity = setupActivity(operator, input, x);
-        activity.textView = view;
-
-        activity.equals(view);
-        Assert.assertEquals(result, view.getText());
+        checkResultWithText(result);
     }
 
     /**
@@ -134,26 +86,31 @@ public class MainActivityTest {
      */
     @Test
     public void plusPositiveDecimal() {
-        // 演算子：足し算
-        int operator = this.FLG_PLUS;
         // 入力値X
         float x = 53.3f;
+        clickButtonWithId(R.id.button5);
+        clickButtonWithId(R.id.button3);
+        clickButtonWithId(R.id.button_dot);
+        clickButtonWithId(R.id.button3);
+
+        // 演算子：足し算
+        clickButtonWithId(R.id.button_plus);
+
         // 入力値Y
         float y = 234.135f;
-        // 入力値の文字列
-        StringBuilder input = new StringBuilder();
-        input.append(x);
-        input.append(this.OPERATOR_PLUS);
-        input.append(y);
-        // 期待値
+        clickButtonWithId(R.id.button2);
+        clickButtonWithId(R.id.button3);
+        clickButtonWithId(R.id.button4);
+        clickButtonWithId(R.id.button_dot);
+        clickButtonWithId(R.id.button1);
+        clickButtonWithId(R.id.button3);
+        clickButtonWithId(R.id.button5);
+
+        // x + y = ?
         String result = Float.toString(x + y);
+        clickButtonWithId(R.id.button_equals);
 
-        TextView view = new TextView(this.context);
-        MainActivity activity = setupActivity(operator, input, x);
-        activity.textView = view;
-
-        activity.equals(view);
-        Assert.assertEquals(result, view.getText());
+        checkResultWithText(result);
     }
 
     /**
@@ -165,26 +122,25 @@ public class MainActivityTest {
      */
     @Test
     public void minusPositive() {
-        // 演算子：引き算
-        int operator = this.FLG_MINUS;
         // 入力値X
         int x = 248;
+        clickButtonWithId(R.id.button2);
+        clickButtonWithId(R.id.button4);
+        clickButtonWithId(R.id.button8);
+
+        // 演算子：引き算
+        clickButtonWithId(R.id.button_minus);
+
         // 入力値Y
         int y = 63;
-        // 入力値の文字列
-        StringBuilder input = new StringBuilder();
-        input.append(x);
-        input.append(this.OPERATOR_MINUS);
-        input.append(y);
-        // 期待値
+        clickButtonWithId(R.id.button6);
+        clickButtonWithId(R.id.button3);
+
+        // x - y = ?
         String result = Integer.toString(x - y);
+        clickButtonWithId(R.id.button_equals);
 
-        TextView view = new TextView(this.context);
-        MainActivity activity = setupActivity(operator, input, x);
-        activity.textView = view;
-
-        activity.equals(view);
-        Assert.assertEquals(result, view.getText());
+        checkResultWithText(result);
     }
 
     /**
@@ -196,26 +152,32 @@ public class MainActivityTest {
      */
     @Test
     public void minusPositiveDecimal() {
-        // 演算子：引き算
-        int operator = this.FLG_MINUS;
         // 入力値X
         float x = 342.144f;
+        clickButtonWithId(R.id.button3);
+        clickButtonWithId(R.id.button4);
+        clickButtonWithId(R.id.button2);
+        clickButtonWithId(R.id.button_dot);
+        clickButtonWithId(R.id.button1);
+        clickButtonWithId(R.id.button4);
+        clickButtonWithId(R.id.button4);
+
+        // 演算子：引き算
+        clickButtonWithId(R.id.button_minus);
+
         // 入力値Y
         float y = 48.67f;
-        // 入力値の文字列
-        StringBuilder input = new StringBuilder();
-        input.append(x);
-        input.append(this.OPERATOR_MINUS);
-        input.append(y);
-        // 期待値
+        clickButtonWithId(R.id.button4);
+        clickButtonWithId(R.id.button8);
+        clickButtonWithId(R.id.button_dot);
+        clickButtonWithId(R.id.button6);
+        clickButtonWithId(R.id.button7);
+
+        // x - y = ?
         String result = Float.toString(x - y);
+        clickButtonWithId(R.id.button_equals);
 
-        TextView view = new TextView(this.context);
-        MainActivity activity = setupActivity(operator, input, x);
-        activity.textView = view;
-
-        activity.equals(view);
-        Assert.assertEquals(result, view.getText());
+        checkResultWithText(result);
     }
 
     /**
@@ -227,26 +189,30 @@ public class MainActivityTest {
      */
     @Test
     public void minusNegativeDecimal() {
-        // 演算子：引き算
-        int operator = this.FLG_MINUS;
         // 入力値X
         float x = 2.24f;
+        clickButtonWithId(R.id.button2);
+        clickButtonWithId(R.id.button_dot);
+        clickButtonWithId(R.id.button2);
+        clickButtonWithId(R.id.button4);
+
+        // 演算子：引き算
+        clickButtonWithId(R.id.button_minus);
+
         // 入力値Y
         float y = 340.23f;
-        // 入力値の文字列
-        StringBuilder input = new StringBuilder();
-        input.append(x);
-        input.append(this.OPERATOR_MINUS);
-        input.append(y);
-        // 期待値
+        clickButtonWithId(R.id.button3);
+        clickButtonWithId(R.id.button4);
+        clickButtonWithId(R.id.button0);
+        clickButtonWithId(R.id.button_dot);
+        clickButtonWithId(R.id.button2);
+        clickButtonWithId(R.id.button3);
+
+        // x - y = ?
         String result = Float.toString(x - y);
+        clickButtonWithId(R.id.button_equals);
 
-        TextView view = new TextView(this.context);
-        MainActivity activity = setupActivity(operator, input, x);
-        activity.textView = view;
-
-        activity.equals(view);
-        Assert.assertEquals(result, view.getText());
+        checkResultWithText(result);
     }
 
     /**
@@ -258,26 +224,25 @@ public class MainActivityTest {
      */
     @Test
     public void timesPositive() {
-        // 演算子：掛け算
-        int operator = this.FLG_TIMES;
         // 入力値X
         int x = 620;
+        clickButtonWithId(R.id.button6);
+        clickButtonWithId(R.id.button2);
+        clickButtonWithId(R.id.button0);
+
+        // 演算子：掛け算
+        clickButtonWithId(R.id.button_times);
+
         // 入力値Y
         int y = 93;
-        // 入力値の文字列
-        StringBuilder input = new StringBuilder();
-        input.append(x);
-        input.append(this.OPERATOR_TIMES);
-        input.append(y);
-        // 期待値
+        clickButtonWithId(R.id.button9);
+        clickButtonWithId(R.id.button3);
+
+        // x * y = ?
         String result = Integer.toString(x * y);
+        clickButtonWithId(R.id.button_equals);
 
-        TextView view = new TextView(this.context);
-        MainActivity activity = setupActivity(operator, input, x);
-        activity.textView = view;
-
-        activity.equals(view);
-        Assert.assertEquals(result, view.getText());
+        checkResultWithText(result);
     }
 
     /**
@@ -289,26 +254,33 @@ public class MainActivityTest {
      */
     @Test
     public void timesPositiveDecimal() {
-        // 演算子：掛け算
-        int operator = this.FLG_TIMES;
         // 入力値X
         float x = 24.1331f;
+
+        clickButtonWithId(R.id.button2);
+        clickButtonWithId(R.id.button4);
+        clickButtonWithId(R.id.button_dot);
+        clickButtonWithId(R.id.button1);
+        clickButtonWithId(R.id.button3);
+        clickButtonWithId(R.id.button3);
+        clickButtonWithId(R.id.button1);
+
+        // 演算子：掛け算
+        clickButtonWithId(R.id.button_times);
+
         // 入力値Y
         float y = 428.3f;
-        // 入力値の文字列
-        StringBuilder input = new StringBuilder();
-        input.append(x);
-        input.append(this.OPERATOR_TIMES);
-        input.append(y);
-        // 期待値
+        clickButtonWithId(R.id.button4);
+        clickButtonWithId(R.id.button2);
+        clickButtonWithId(R.id.button8);
+        clickButtonWithId(R.id.button_dot);
+        clickButtonWithId(R.id.button3);
+
+        // x * y = ?
         String result = Float.toString(x * y);
+        clickButtonWithId(R.id.button_equals);
 
-        TextView view = new TextView(this.context);
-        MainActivity activity = setupActivity(operator, input, x);
-        activity.textView = view;
-
-        activity.equals(view);
-        Assert.assertEquals(result, view.getText());
+        checkResultWithText(result);
     }
 
     /**
@@ -320,26 +292,24 @@ public class MainActivityTest {
      */
     @Test
     public void dividedPositive() {
-        // 演算子：割り算
-        int operator = this.FLG_DIVIDED;
         // 入力値X
         int x = 942;
+        clickButtonWithId(R.id.button9);
+        clickButtonWithId(R.id.button4);
+        clickButtonWithId(R.id.button2);
+
+        // 演算子：割り算
+        clickButtonWithId(R.id.button_divided);
+
         // 入力値Y
         int y = 2;
-        // 入力値の文字列
-        StringBuilder input = new StringBuilder();
-        input.append(x);
-        input.append(this.OPERATOR_DIVIDED);
-        input.append(y);
-        // 期待値
+        clickButtonWithId(R.id.button2);
+
+        // x ÷ y = ?
         String result = Integer.toString(x / y);
+        clickButtonWithId(R.id.button_equals);
 
-        TextView view = new TextView(this.context);
-        MainActivity activity = setupActivity(operator, input, x);
-        activity.textView = view;
-
-        activity.equals(view);
-        Assert.assertEquals(result, view.getText());
+        checkResultWithText(result);
     }
 
     /**
@@ -351,26 +321,31 @@ public class MainActivityTest {
      */
     @Test
     public void dividedPositiveDecimal() {
-        // 演算子：掛け算
-        int operator = this.FLG_DIVIDED;
         // 入力値X
         float x = 342.12f;
+        clickButtonWithId(R.id.button3);
+        clickButtonWithId(R.id.button4);
+        clickButtonWithId(R.id.button2);
+        clickButtonWithId(R.id.button_dot);
+        clickButtonWithId(R.id.button1);
+        clickButtonWithId(R.id.button2);
+
+        // 演算子：割り算
+        clickButtonWithId(R.id.button_divided);
+
         // 入力値Y
         float y = 94.676f;
-        // 入力値の文字列
-        StringBuilder input = new StringBuilder();
-        input.append(x);
-        input.append(this.OPERATOR_DIVIDED);
-        input.append(y);
-        // 期待値
+        clickButtonWithId(R.id.button9);
+        clickButtonWithId(R.id.button4);
+        clickButtonWithId(R.id.button_dot);
+        clickButtonWithId(R.id.button6);
+        clickButtonWithId(R.id.button7);
+        clickButtonWithId(R.id.button6);
+
+        // x ÷ y = ?
         String result = Float.toString(x / y);
+        clickButtonWithId(R.id.button_equals);
 
-        TextView view = new TextView(this.context);
-        MainActivity activity = setupActivity(operator, input, x);
-        activity.textView = view;
-
-        activity.equals(view);
-        Assert.assertEquals(result, view.getText());
+        checkResultWithText(result);
     }
-
 }
