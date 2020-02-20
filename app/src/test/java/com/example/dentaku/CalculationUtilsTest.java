@@ -7,37 +7,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
-public class CalculationTest {
-
-    /**
-     * コンストラクター
-     * コンストラクターの起動で、入力値のYが正しくフィールドに設定されていること
-     *
-     * @throws NoSuchFieldException
-     * @throws IllegalAccessException
-     */
-    @Test
-    public void Calculation() throws NoSuchFieldException, IllegalAccessException {
-        // 入力値の設定
-        Float x = 231.3f;
-        Float y = 906.86f;
-        StringBuilder input = new StringBuilder();
-        input.append(x);
-        input.append(Constants.OPERATOR_PLUS);
-        input.append(y);
-        OperatorFlag flg = OperatorFlag.PLUS;
-
-        Calculation cal = new Calculation(x, input, flg);
-
-        // privateフィールドにアクセスするためのリフレクション
-        Field field = cal.getClass().getDeclaredField("y");
-        field.setAccessible(true);
-
-        // 入力値yとコンストラクターで設定されたyが一致すること
-        assertEquals(y, (Float) field.getFloat(cal));
-
-    }
+public class CalculationUtilsTest {
 
     /**
      * イコール
@@ -49,26 +21,16 @@ public class CalculationTest {
     @Test
     public void equalFlgOther() throws NoSuchFieldException, IllegalAccessException {
         // 入力値の設定
-        Float x = 29.52f;
-        Float y = 342.534f;
+        float x = 29.52f;
+        float y = 342.534f;
         StringBuilder input = new StringBuilder();
         input.append(x);
         input.append(Constants.OPERATOR_PLUS);
         input.append(y);
-        OperatorFlag flg = OperatorFlag.PLUS;
 
         // 期待値
         String result = "";
-
-        Calculation cal = new Calculation(x, input, flg);
-
-        // privateフィールドにアクセスするためのリフレクション
-        Field field = cal.getClass().getDeclaredField("flg");
-        field.setAccessible(true);
-        field.set(cal, OperatorFlag.DEFAULT);
-
-        assertEquals(result, cal.equal());
-
+        assertEquals(result, CalculationUtils.calculate(x, input, OperatorFlag.DEFAULT));
     }
 
     /**
@@ -81,21 +43,17 @@ public class CalculationTest {
     @Test
     public void equalPlus() {
         // 入力値の設定
-        Float x = 9.423f;
-        Float y = 345.22f;
+        float x = 9.423f;
+        float y = 345.22f;
         // 演算子：プラス
         StringBuilder input = new StringBuilder();
         input.append(x);
         input.append(Constants.OPERATOR_PLUS);
         input.append(y);
-        OperatorFlag flg = OperatorFlag.PLUS;
 
         // 期待値
         String result = String.valueOf(x + y);
-
-        Calculation cal = new Calculation(x, input, flg);
-
-        assertEquals(result, cal.equal());
+        assertEquals(result, CalculationUtils.calculate(x, input, OperatorFlag.PLUS));
     }
 
     /**
@@ -108,21 +66,17 @@ public class CalculationTest {
     @Test
     public void equalMinus() {
         // 入力値の設定
-        Float x = 301.4f;
-        Float y = 3.2f;
+        float x = 301.4f;
+        float y = 3.2f;
         // 演算子：マイナス
         StringBuilder input = new StringBuilder();
         input.append(x);
         input.append(Constants.OPERATOR_MINUS);
         input.append(y);
-        OperatorFlag flg = OperatorFlag.MINUS;
 
         // 期待値
         String result = String.valueOf(x - y);
-
-        Calculation cal = new Calculation(x, input, flg);
-
-        assertEquals(result, cal.equal());
+        assertEquals(result, CalculationUtils.calculate(x, input, OperatorFlag.MINUS));
     }
 
     /**
@@ -135,21 +89,17 @@ public class CalculationTest {
     @Test
     public void equalTimes() {
         // 入力値の設定
-        Float x = 4.72f;
-        Float y = 859.3f;
+        float x = 4.72f;
+        float y = 859.3f;
         // 演算子：かける
         StringBuilder input = new StringBuilder();
         input.append(x);
         input.append(Constants.OPERATOR_TIMES);
         input.append(y);
-        OperatorFlag flg = OperatorFlag.TIMES;
 
         // 期待値
         String result = String.valueOf(x * y);
-
-        Calculation cal = new Calculation(x, input, flg);
-
-        assertEquals(result, cal.equal());
+        assertEquals(result, CalculationUtils.calculate(x, input, OperatorFlag.TIMES));
     }
 
     /**
@@ -162,21 +112,17 @@ public class CalculationTest {
     @Test
     public void equalDivided() {
         // 入力値の設定
-        Float x = 3520.42f;
-        Float y = 232.2f;
+        float x = 3520.42f;
+        float y = 232.2f;
         // 演算子：割る
         StringBuilder input = new StringBuilder();
         input.append(x);
         input.append(Constants.OPERATOR_DIVIDED);
         input.append(y);
-        OperatorFlag flg = OperatorFlag.DIVIDED;
 
         // 期待値
         String result = String.valueOf(x / y);
-
-        Calculation cal = new Calculation(x, input, flg);
-
-        assertEquals(result, cal.equal());
+        assertEquals(result, CalculationUtils.calculate(x, input, OperatorFlag.DIVIDED));
     }
 
     /**
@@ -187,31 +133,17 @@ public class CalculationTest {
      * 期待値：空文字
      */
     @Test
-    public void getOperatorFlgOther() throws NoSuchFieldException, IllegalAccessException,
-            NoSuchMethodException, InvocationTargetException {
-        // 入力値の設定
-        Float x = 3520.42f;
-        Float y = 232.2f;
-        StringBuilder input = new StringBuilder();
-        input.append(x);
-        input.append(Constants.OPERATOR_DIVIDED);
-        input.append(y);
-        OperatorFlag flg = OperatorFlag.DIVIDED;
+    public void getOperatorFlgOther() {
+        try {
+            Method method = CalculationUtils.class.getDeclaredMethod("getOperation", OperatorFlag.class);
+            method.setAccessible(true);
 
-        // 期待値
-        String result = "";
-
-        Calculation cal = new Calculation(x, input, flg);
-
-        // privateフィールドにアクセスするためのリフレクション
-        Field field = cal.getClass().getDeclaredField("flg");
-        field.setAccessible(true);
-        field.set(cal, OperatorFlag.DEFAULT);
-        // privateメソッドにアクセスするためのリフレクション
-        Method method = cal.getClass().getDeclaredMethod("getOperation");
-        method.setAccessible(true);
-
-        assertEquals(result, method.invoke(cal));
+            // 期待値
+            String result = "";
+            assertEquals(result, method.invoke(null, OperatorFlag.DEFAULT));
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
     }
 
     /**
@@ -224,23 +156,19 @@ public class CalculationTest {
     @Test
     public void truncateDecimalPointTrue() {
         // コンストラクターの設定
-        Float x = 4f;
-        Float y = 2f;
+        float x = 4f;
+        float y = 2f;
         StringBuilder sb = new StringBuilder();
         sb.append(x);
         sb.append(Constants.OPERATOR_PLUS);
         sb.append(y);
         OperatorFlag flg = OperatorFlag.PLUS;
 
-        // 入力値の設定
-        String input = "6.0";
+        String text = CalculationUtils.calculate(x, sb, flg);
 
         // 期待値
         String result = "6";
-
-        Calculation cal = new Calculation(x, sb, flg);
-
-        assertEquals(result, cal.truncateDecimalPoint(input));
+        assertEquals(result, CalculationUtils.truncateDecimalPoint(text));
     }
 
     /**
@@ -253,8 +181,8 @@ public class CalculationTest {
     @Test
     public void truncateDecimalPointFalse() {
         // コンストラクターの設定
-        Float x = 4.4f;
-        Float y = 2.5f;
+        float x = 4.4f;
+        float y = 2.5f;
         StringBuilder sb = new StringBuilder();
         sb.append(x);
         sb.append(Constants.OPERATOR_PLUS);
@@ -262,13 +190,10 @@ public class CalculationTest {
         OperatorFlag flg = OperatorFlag.PLUS;
 
         // 入力値の設定
-        String input = "6.9";
+        String input = CalculationUtils.calculate(x, sb, flg);
 
         // 期待値
-        String result = input;
-
-        Calculation cal = new Calculation(x, sb, flg);
-
-        assertEquals(result, cal.truncateDecimalPoint(input));
+        String result = "6.9";
+        assertEquals(result, CalculationUtils.truncateDecimalPoint(input));
     }
 }

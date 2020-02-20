@@ -173,9 +173,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 || OperatorFlag.MINUS == this.flg
                 || OperatorFlag.TIMES == this.flg
                 || OperatorFlag.DIVIDED == this.flg) {
-            Calculation cal = new Calculation(this.x, this.sb, this.flg);
-            equalsText = cal.equal();
-            equalsText = cal.truncateDecimalPoint(equalsText);
+
+            equalsText = CalculationUtils.calculate(this.x, this.sb, this.flg);
+            equalsText = CalculationUtils.truncateDecimalPoint(equalsText);
         }
 
         // 答えをテキストビューに設定
