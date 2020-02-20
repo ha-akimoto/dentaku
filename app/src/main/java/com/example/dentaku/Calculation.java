@@ -3,9 +3,9 @@ package com.example.dentaku;
 public class Calculation {
     private float x;
     private float y;
-    private int flg;
+    private OperatorFlag flg;
 
-    public Calculation(float x, StringBuilder input, int flg) {
+    public Calculation(float x, StringBuilder input, OperatorFlag flg) {
         this.x = x;
         this.flg = flg;
         this.y = Float.valueOf(
@@ -13,13 +13,13 @@ public class Calculation {
     }
 
     public String equal() {
-        if (Constants.FLG_PLUS == this.flg) {
+        if (OperatorFlag.PLUS == this.flg) {
             return String.valueOf(this.x + this.y);
-        } else if (Constants.FLG_MINUS == this.flg) {
+        } else if (OperatorFlag.MINUS == this.flg) {
             return String.valueOf(this.x - this.y);
-        } else if (Constants.FLG_TIMES == this.flg) {
+        } else if (OperatorFlag.TIMES == this.flg) {
             return String.valueOf(this.x * this.y);
-        } else if (Constants.FLG_DIVIDED == this.flg) {
+        } else if (OperatorFlag.DIVIDED == this.flg) {
             return String.valueOf(this.x / this.y);
         } else {
             return "";
@@ -28,13 +28,13 @@ public class Calculation {
     }
 
     private String getOperation() {
-        if (Constants.FLG_PLUS == this.flg) {
+        if (OperatorFlag.PLUS == this.flg) {
             return Constants.OPERATOR_PLUS;
-        } else if (Constants.FLG_MINUS == this.flg) {
+        } else if (OperatorFlag.MINUS == this.flg) {
             return Constants.OPERATOR_MINUS;
-        } else if (Constants.FLG_TIMES == this.flg) {
+        } else if (OperatorFlag.TIMES == this.flg) {
             return Constants.OPERATOR_TIMES;
-        } else if (Constants.FLG_DIVIDED == this.flg) {
+        } else if (OperatorFlag.DIVIDED == this.flg) {
             return Constants.OPERATOR_DIVIDED;
         } else {
             return "";

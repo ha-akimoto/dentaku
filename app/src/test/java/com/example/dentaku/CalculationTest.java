@@ -26,7 +26,7 @@ public class CalculationTest {
         input.append(x);
         input.append(Constants.OPERATOR_PLUS);
         input.append(y);
-        int flg = Constants.FLG_PLUS;
+        OperatorFlag flg = OperatorFlag.PLUS;
 
         Calculation cal = new Calculation(x, input, flg);
 
@@ -55,7 +55,7 @@ public class CalculationTest {
         input.append(x);
         input.append(Constants.OPERATOR_PLUS);
         input.append(y);
-        int flg = Constants.FLG_PLUS;
+        OperatorFlag flg = OperatorFlag.PLUS;
 
         // 期待値
         String result = "";
@@ -65,7 +65,7 @@ public class CalculationTest {
         // privateフィールドにアクセスするためのリフレクション
         Field field = cal.getClass().getDeclaredField("flg");
         field.setAccessible(true);
-        field.setInt(cal, 0);
+        field.set(cal, OperatorFlag.DEFAULT);
 
         assertEquals(result, cal.equal());
 
@@ -88,7 +88,7 @@ public class CalculationTest {
         input.append(x);
         input.append(Constants.OPERATOR_PLUS);
         input.append(y);
-        int flg = Constants.FLG_PLUS;
+        OperatorFlag flg = OperatorFlag.PLUS;
 
         // 期待値
         String result = String.valueOf(x + y);
@@ -115,7 +115,7 @@ public class CalculationTest {
         input.append(x);
         input.append(Constants.OPERATOR_MINUS);
         input.append(y);
-        int flg = Constants.FLG_MINUS;
+        OperatorFlag flg = OperatorFlag.MINUS;
 
         // 期待値
         String result = String.valueOf(x - y);
@@ -142,7 +142,7 @@ public class CalculationTest {
         input.append(x);
         input.append(Constants.OPERATOR_TIMES);
         input.append(y);
-        int flg = Constants.FLG_TIMES;
+        OperatorFlag flg = OperatorFlag.TIMES;
 
         // 期待値
         String result = String.valueOf(x * y);
@@ -169,7 +169,7 @@ public class CalculationTest {
         input.append(x);
         input.append(Constants.OPERATOR_DIVIDED);
         input.append(y);
-        int flg = Constants.FLG_DIVIDED;
+        OperatorFlag flg = OperatorFlag.DIVIDED;
 
         // 期待値
         String result = String.valueOf(x / y);
@@ -196,7 +196,7 @@ public class CalculationTest {
         input.append(x);
         input.append(Constants.OPERATOR_DIVIDED);
         input.append(y);
-        int flg = Constants.FLG_DIVIDED;
+        OperatorFlag flg = OperatorFlag.DIVIDED;
 
         // 期待値
         String result = "";
@@ -206,7 +206,7 @@ public class CalculationTest {
         // privateフィールドにアクセスするためのリフレクション
         Field field = cal.getClass().getDeclaredField("flg");
         field.setAccessible(true);
-        field.setInt(cal, 5);
+        field.set(cal, OperatorFlag.DEFAULT);
         // privateメソッドにアクセスするためのリフレクション
         Method method = cal.getClass().getDeclaredMethod("getOperation");
         method.setAccessible(true);
@@ -230,7 +230,7 @@ public class CalculationTest {
         sb.append(x);
         sb.append(Constants.OPERATOR_PLUS);
         sb.append(y);
-        int flg = Constants.FLG_PLUS;
+        OperatorFlag flg = OperatorFlag.PLUS;
 
         // 入力値の設定
         String input = "6.0";
@@ -259,7 +259,7 @@ public class CalculationTest {
         sb.append(x);
         sb.append(Constants.OPERATOR_PLUS);
         sb.append(y);
-        int flg = Constants.FLG_PLUS;
+        OperatorFlag flg = OperatorFlag.PLUS;
 
         // 入力値の設定
         String input = "6.9";
@@ -271,6 +271,4 @@ public class CalculationTest {
 
         assertEquals(result, cal.truncateDecimalPoint(input));
     }
-
-
 }

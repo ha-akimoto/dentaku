@@ -25,9 +25,9 @@ public class MainActivityTest {
         this.context = InstrumentationRegistry.getInstrumentation().getContext();
     }
 
-    private MainActivity setupActivity(int operator, StringBuilder input, float x) {
+    private MainActivity setupActivity(OperatorFlag flag, StringBuilder input, float x) {
         MainActivity activity = new MainActivity();
-        activity.flg = operator;
+        activity.flg = flag;
         if (null != input) {
             activity.sb = input;
         }
@@ -44,26 +44,6 @@ public class MainActivityTest {
     }
 
     /**
-     * 演算フラグが想定外の値の場合
-     * 計算の処理を行わず正常終了すること
-     * 演算フラグ：0~4以外
-     * 期待値：Viewに設定されるテキスト=空文字
-     */
-    @Test
-    public void flgOther() {
-        // 演算子：0~4以外
-        int operator = 5;
-
-        TextView view = new TextView(this.context);
-        MainActivity activity = setupActivity(operator, null, 0);
-        activity.textView = view;
-
-        activity.equals(view);
-        Assert.assertEquals("", view.getText());
-
-    }
-
-    /**
      * 演算フラグがデフォルトの値の場合
      * 計算の処理を行わず正常終了すること
      * 演算フラグ：デフォルト
@@ -72,10 +52,10 @@ public class MainActivityTest {
     @Test
     public void flgDefault() {
         // 演算子：デフォルト
-        int operator = Constants.FLG_DEFAULT;
+        OperatorFlag flag = OperatorFlag.DEFAULT;
 
         TextView view = new TextView(this.context);
-        MainActivity activity = setupActivity(operator, null, 0);
+        MainActivity activity = setupActivity(flag, null, 0);
         activity.textView = view;
 
         activity.equals(view);
@@ -93,7 +73,7 @@ public class MainActivityTest {
     @Test
     public void plusPositive() {
         // 演算子：足し算
-        int operator = Constants.FLG_PLUS;
+        OperatorFlag flag = OperatorFlag.PLUS;
         // 入力値X
         int x = 106;
         // 入力値Y
@@ -107,7 +87,7 @@ public class MainActivityTest {
         String result = Integer.toString(x + y);
 
         TextView view = new TextView(this.context);
-        MainActivity activity = setupActivity(operator, input, x);
+        MainActivity activity = setupActivity(flag, input, x);
         activity.textView = view;
 
         activity.equals(view);
@@ -124,7 +104,7 @@ public class MainActivityTest {
     @Test
     public void plusPositiveDecimal() {
         // 演算子：足し算
-        int operator = Constants.FLG_PLUS;
+        OperatorFlag flag = OperatorFlag.PLUS;
         // 入力値X
         float x = 53.3f;
         // 入力値Y
@@ -138,7 +118,7 @@ public class MainActivityTest {
         String result = Float.toString(x + y);
 
         TextView view = new TextView(this.context);
-        MainActivity activity = setupActivity(operator, input, x);
+        MainActivity activity = setupActivity(flag, input, x);
         activity.textView = view;
 
         activity.equals(view);
@@ -155,7 +135,7 @@ public class MainActivityTest {
     @Test
     public void minusPositive() {
         // 演算子：引き算
-        int operator = Constants.FLG_MINUS;
+        OperatorFlag flag = OperatorFlag.MINUS;
         // 入力値X
         int x = 248;
         // 入力値Y
@@ -169,7 +149,7 @@ public class MainActivityTest {
         String result = Integer.toString(x - y);
 
         TextView view = new TextView(this.context);
-        MainActivity activity = setupActivity(operator, input, x);
+        MainActivity activity = setupActivity(flag, input, x);
         activity.textView = view;
 
         activity.equals(view);
@@ -186,7 +166,7 @@ public class MainActivityTest {
     @Test
     public void minusPositiveDecimal() {
         // 演算子：引き算
-        int operator = Constants.FLG_MINUS;
+        OperatorFlag flag = OperatorFlag.MINUS;
         // 入力値X
         float x = 342.144f;
         // 入力値Y
@@ -200,7 +180,7 @@ public class MainActivityTest {
         String result = Float.toString(x - y);
 
         TextView view = new TextView(this.context);
-        MainActivity activity = setupActivity(operator, input, x);
+        MainActivity activity = setupActivity(flag, input, x);
         activity.textView = view;
 
         activity.equals(view);
@@ -217,7 +197,7 @@ public class MainActivityTest {
     @Test
     public void minusNegativeDecimal() {
         // 演算子：引き算
-        int operator = Constants.FLG_MINUS;
+        OperatorFlag flag = OperatorFlag.MINUS;
         // 入力値X
         float x = 2.24f;
         // 入力値Y
@@ -231,7 +211,7 @@ public class MainActivityTest {
         String result = Float.toString(x - y);
 
         TextView view = new TextView(this.context);
-        MainActivity activity = setupActivity(operator, input, x);
+        MainActivity activity = setupActivity(flag, input, x);
         activity.textView = view;
 
         activity.equals(view);
@@ -248,7 +228,7 @@ public class MainActivityTest {
     @Test
     public void timesPositive() {
         // 演算子：掛け算
-        int operator = Constants.FLG_TIMES;
+        OperatorFlag flag = OperatorFlag.TIMES;
         // 入力値X
         int x = 620;
         // 入力値Y
@@ -262,7 +242,7 @@ public class MainActivityTest {
         String result = Integer.toString(x * y);
 
         TextView view = new TextView(this.context);
-        MainActivity activity = setupActivity(operator, input, x);
+        MainActivity activity = setupActivity(flag, input, x);
         activity.textView = view;
 
         activity.equals(view);
@@ -279,7 +259,7 @@ public class MainActivityTest {
     @Test
     public void timesPositiveDecimal() {
         // 演算子：掛け算
-        int operator = Constants.FLG_TIMES;
+        OperatorFlag flag = OperatorFlag.TIMES;
         // 入力値X
         float x = 24.1331f;
         // 入力値Y
@@ -293,7 +273,7 @@ public class MainActivityTest {
         String result = Float.toString(x * y);
 
         TextView view = new TextView(this.context);
-        MainActivity activity = setupActivity(operator, input, x);
+        MainActivity activity = setupActivity(flag, input, x);
         activity.textView = view;
 
         activity.equals(view);
@@ -310,7 +290,7 @@ public class MainActivityTest {
     @Test
     public void dividedPositive() {
         // 演算子：割り算
-        int operator = Constants.FLG_DIVIDED;
+        OperatorFlag flag = OperatorFlag.DIVIDED;
         // 入力値X
         int x = 942;
         // 入力値Y
@@ -324,7 +304,7 @@ public class MainActivityTest {
         String result = Integer.toString(x / y);
 
         TextView view = new TextView(this.context);
-        MainActivity activity = setupActivity(operator, input, x);
+        MainActivity activity = setupActivity(flag, input, x);
         activity.textView = view;
 
         activity.equals(view);
@@ -341,7 +321,7 @@ public class MainActivityTest {
     @Test
     public void dividedPositiveDecimal() {
         // 演算子：掛け算
-        int operator = Constants.FLG_DIVIDED;
+        OperatorFlag flag = OperatorFlag.DIVIDED;
         // 入力値X
         float x = 342.12f;
         // 入力値Y
@@ -355,11 +335,10 @@ public class MainActivityTest {
         String result = Float.toString(x / y);
 
         TextView view = new TextView(this.context);
-        MainActivity activity = setupActivity(operator, input, x);
+        MainActivity activity = setupActivity(flag, input, x);
         activity.textView = view;
 
         activity.equals(view);
         Assert.assertEquals(result, view.getText());
     }
-
 }
